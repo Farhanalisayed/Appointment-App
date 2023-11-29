@@ -1,0 +1,28 @@
+/* Write your CSS here */
+.star {
+  height: 20px;
+  width: 20px;
+}
+@media (min-width: 767px) {
+  .list {
+    display: flex;
+    justify-content: space-around;
+    background-color: white;
+  }
+}
+@media (max-width: 767px) {
+  .list {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    background-color: white;
+  }
+}
+.title-name {
+  color: #171f46;
+  font-size: 17px;
+}
+.date-format {
+  color: #fbc7d4;
+  font-size: 13px;
+}

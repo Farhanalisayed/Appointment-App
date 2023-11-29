@@ -1,0 +1,46 @@
+/* Write your CSS here */
+* {
+  font-family: 'Roboto';
+}
+@media (max-width: 767px) {
+  .image {
+    display: none;
+  }
+}
+@media (max-width: 767px) {
+  .image {
+    height: 250px;
+    width: 270px;
+  }
+}
+.heading {
+  font-size: 25px;
+  color: #171f46;
+}
+.title {
+  color: #fbc7d4;
+  font-size: 15px;
+}
+.the-cont {
+  background-image: linear-gradient(to bottom, #fbc7d4, #9796f0);
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.card {
+  background-color: white;
+  padding: 15px;
+  border: 0px solid;
+  display: flex;
+  flex-direction: column;
+  border-radius: 8px;
+}
+.upper-cont {
+  display: flex;
+  justify-content: space-around;
+}
+.my-form {
+  border: 0px solid;
+}
