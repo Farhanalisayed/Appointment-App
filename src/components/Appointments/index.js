@@ -10,7 +10,6 @@ class Appointments extends Component {
     title: '',
     date: '',
     isClicked: false,
-    theClass: '',
   }
 
   addTitle = event => {
@@ -24,7 +23,7 @@ class Appointments extends Component {
   submitDetail = event => {
     event.preventDefault()
     const {title, date} = this.state
-    const formattedDate = format(new Date(theDate), 'dd MMMM yyyy, EEEE')
+    const formattedDate = format(new Date(date), 'dd MMMM yyyy, EEEE')
     const newComment = {
       id: uuidv4(),
       theTitle: title,
@@ -51,28 +50,31 @@ class Appointments extends Component {
     this.setState({appointmentList: updatedList})
   }
 
-  filterIt = () => {
-    const {isClicked} = this.state
-    const classy = isClicked ? 'starred-btn' : 'normal-btn'
-    this.setState({theClass: classy})
-    if (isClicked === true) {
-      this.setState(prevState => ({
-        appointmentList: prevState.appointmentList.filter(
-          each => each.isFavorite === true,
-        ),
-      }))
-    } else {
-      this.setState(prevState => ({appointmentList: prevState.appointmentList}))
-    }
+  starClicked = () => {
+    this.setState(prevState => ({isClicked: !prevState.isClicked}))
   }
 
-  filterStarred = () => {
-    this.setState(prevState => ({isClicked: !prevState.isClicked}))
-    this.filterIt()
+  getFilteredAppointmentsList = () => {
+    const {appointmentList, isClicked} = this.state
+    if (isClicked) {
+      return appointmentList.filter(each => each.isFavorite === true)
+    }
+    return appointmentList
+  }
+
+  renderAppointmentsList = () => {
+    const getFilteredAppointmentsList = this.getFilteredAppointmentsList()
+    return getFilteredAppointmentsList.map(each => (
+      <AppointmentItem
+        key={each.id}
+        details={each}
+        toggleFavorite={this.toggleFavorite}
+      />
+    ))
   }
 
   render() {
-    const {appointmentList, theClass, title, date} = this.state
+    const {isClicked, title, date} = this.state
 
     return (
       <div className="the-cont">
@@ -93,7 +95,7 @@ class Appointments extends Component {
               />
 
               <label htmlFor="date" className="title">
-                TITLE
+                DATE
               </label>
               <input
                 value={date}
@@ -120,23 +122,14 @@ class Appointments extends Component {
             <div className="head">
               <h1 className="tag">Appointments</h1>
               <button
-                className={theClass}
+                className={isClicked ? 'starred-btn' : 'normal-btn'}
                 type="button"
-                onClick={this.filterStarred}
+                onClick={this.starClicked}
               >
                 Starred
               </button>
             </div>
-
-            <ul className="lists">
-              {appointmentList.map(each => (
-                <AppointmentItem
-                  key={each.id}
-                  details={each}
-                  toggleFavorite={this.toggleFavorite}
-                />
-              ))}
-            </ul>
+            <ul className="lists">{this.renderAppointmentsList()}</ul>
           </div>
         </div>
       </div>
