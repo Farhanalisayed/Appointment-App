@@ -1,22 +1,26 @@
 /* Write your CSS here */
+/* Write your CSS here */
 .star {
   height: 20px;
   width: 20px;
+  margin-right: 5px;
 }
-@media (min-width: 767px) {
-  .list {
-    display: flex;
-    justify-content: space-around;
-    background-color: white;
-  }
+.list {
+  display: flex;
+  justify-content: space-between;
+  background-color: white;
+  border-radius: 10px;
+  border: 1px solid #9897f0;
+  margin: 5px;
 }
-@media (max-width: 767px) {
-  .list {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    background-color: white;
-  }
+
+
+
+.text-cont {
+  margin-left: 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
 }
 .title-name {
   color: #171f46;
@@ -25,4 +29,10 @@
 .date-format {
   color: #fbc7d4;
   font-size: 13px;
+}
+.star-btn {
+  border: 0px solid;
+  background-color: transparent;
+    height: 20px;
+  width: 20px;
 }
