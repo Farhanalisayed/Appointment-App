@@ -1,20 +1,12 @@
-// Write your code here
 import {Component} from 'react'
 import {v4 as uuidv4} from 'uuid'
+import {format} from 'date-fns'
 import './index.css'
 import AppointmentItem from '../AppointmentItem'
-const initAppointmentsList = [
-  {
-    id: uuidv4(),
-    title: '',
-    date: '',
-    isFavorite: false,
-  },
-]
 
 class Appointments extends Component {
   state = {
-    appointmentList: initAppointmentsList,
+    appointmentList: [],
     title: '',
     date: '',
     isClicked: false,
@@ -22,59 +14,66 @@ class Appointments extends Component {
   }
 
   addTitle = event => {
-    const newTitle = event.target.value
-    this.setState({title: newTitle})
+    this.setState({title: event.target.value})
   }
+
   addDate = event => {
-    const newDate = event.target.value
-    this.setState({date: newDate})
+    this.setState({date: event.target.value})
   }
+
   submitDetail = event => {
     event.preventDefault()
     const {title, date} = this.state
-
+    const formattedDate = format(new Date(theDate), 'dd MMMM yyyy, EEEE')
     const newComment = {
       id: uuidv4(),
-      title,
-      date,
+      theTitle: title,
+      theDate: formattedDate,
       isFavorite: false,
     }
     if (title !== '' && date !== '') {
       this.setState(prevState => ({
         appointmentList: [...prevState.appointmentList, newComment],
+        title: '',
+        date: '',
       }))
     }
   }
 
   toggleFavorite = id => {
     const {appointmentList} = this.state
-    const {isFavorite} = appointmentList
     const updatedList = appointmentList.map(each => {
       if (each.id === id) {
-        return {...each, isFavorite: !isFavorite}
+        return {...each, isFavorite: !each.isFavorite}
       }
       return each
     })
     this.setState({appointmentList: updatedList})
   }
 
-  filterStarred = () => {
-    this.setState(prevState => ({isClicked: !prevState.isClicked}))
-    const {isClicked, appointmentList} = this.state
-    const classy = isClicked ? 'added-class' : ''
+  filterIt = () => {
+    const {isClicked} = this.state
+    const classy = isClicked ? 'starred-btn' : 'normal-btn'
     this.setState({theClass: classy})
     if (isClicked === true) {
-      const starredList = appointmentList.filter(
-        each => each.isFavorite === true,
-      )
-      this.setState({appointmentList: starredList})
+      this.setState(prevState => ({
+        appointmentList: prevState.appointmentList.filter(
+          each => each.isFavorite === true,
+        ),
+      }))
     } else {
       this.setState(prevState => ({appointmentList: prevState.appointmentList}))
     }
   }
 
+  filterStarred = () => {
+    this.setState(prevState => ({isClicked: !prevState.isClicked}))
+    this.filterIt()
+  }
+
   render() {
-    const {appointmentList, theClass} = this.state
+    const {appointmentList, theClass, title, date} = this.state
+
     return (
       <div className="the-cont">
         <div className="card">
@@ -85,9 +84,11 @@ class Appointments extends Component {
                 TITLE
               </label>
               <input
+                value={title}
                 type="text"
                 className="bar"
                 id="title"
+                placeholder="Title"
                 onChange={this.addTitle}
               />
 
@@ -95,12 +96,14 @@ class Appointments extends Component {
                 TITLE
               </label>
               <input
+                value={date}
                 type="date"
                 className="bar"
                 id="date"
+                placeholder="dd/mm/yyyy"
                 onChange={this.addDate}
               />
-              <button type="button" className="btn">
+              <button type="submit" className="btn">
                 Add
               </button>
             </form>
@@ -117,7 +120,7 @@ class Appointments extends Component {
             <div className="head">
               <h1 className="tag">Appointments</h1>
               <button
-                className={`starred-btn ${theClass}`}
+                className={theClass}
                 type="button"
                 onClick={this.filterStarred}
               >
@@ -128,8 +131,8 @@ class Appointments extends Component {
             <ul className="lists">
               {appointmentList.map(each => (
                 <AppointmentItem
-                  details={each}
                   key={each.id}
+                  details={each}
                   toggleFavorite={this.toggleFavorite}
                 />
               ))}
