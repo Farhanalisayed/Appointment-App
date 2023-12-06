@@ -1,22 +1,33 @@
 // Write your code here
 import './index.css'
-import {format} from 'date-fns'
 
 const AppointmentItem = props => {
   const {details, toggleFavorite} = props
-  const {id, title, date, isFavorite} = details
-  const formattedDate = format(date, 'dd MMMM yyyy, EEEE')
+  const {id, theTitle, theDate, isFavorite} = details
 
-  const theStar = isFavorite
+  const theUrl = isFavorite
     ? 'https://assets.ccbp.in/frontend/react-js/appointments-app/filled-star-img.png'
     : 'https://assets.ccbp.in/frontend/react-js/appointments-app/star-img.png'
+
+  const clicked = () => {
+    toggleFavorite(id)
+  }
+
   return (
     <li className="list">
       <div className="text-cont">
-        <h1 className="title-name">{title}</h1>
-        <p className="date-format">{formattedDate}</p>
+        <h1 className="title-name">{theTitle}</h1>
+        <p className="date-format">Date: {theDate}</p>
       </div>
-      <img src={theStar} className="star" />
+
+      <button
+        className="star-btn"
+        onClick={clicked}
+        type="button"
+        data-testid="star"
+      >
+        <img src={theUrl} className="star" alt="star" />
+      </button>
     </li>
   )
 }
