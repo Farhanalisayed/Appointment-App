@@ -6,12 +6,28 @@
   .image {
     display: none;
   }
+  ul {
+    list-style-type: none;
+    display: flex;
+    flex-direction: column;
+  }
 }
-@media (max-width: 767px) {
+@media (min-width: 767px) {
   .image {
     height: 250px;
     width: 270px;
   }
+  ul {
+    list-style-type: none;
+    display: flex;
+    flex-direction: row;
+  }
+}
+
+.head {
+  display: flex;
+  justify-content: space-between;
+  margin: 5px;
 }
 .heading {
   font-size: 25px;
@@ -20,6 +36,11 @@
 .title {
   color: #fbc7d4;
   font-size: 15px;
+}
+.bar {
+  border-radius: 10px;
+  border: 1px solid #171f46;
+  width: 90%;
 }
 .the-cont {
   background-image: linear-gradient(to bottom, #fbc7d4, #9796f0);
@@ -39,8 +60,46 @@
 }
 .upper-cont {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
 }
 .my-form {
   border: 0px solid;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
 }
+.tag {
+  color: #171f46;
+  font-size: 20px;
+}
+.normal-btn {
+  color: #8b5cf6;
+  background-color: white;
+  font-size: 16px;
+  border: 1px solid #9796f0;
+  border-radius: 7px;
+  height: 40px;
+  width: 60px;
+}
+.starred-btn {
+  color: white;
+  background-color: #8b5cf6;
+  font-size: 16px;
+  border: 1px solid #9796f0;
+  border-radius: 7px;
+  height: 40px;
+  width: 60px;
+}
+.btn {
+  color: white;
+  border: 0px solid;
+  border-radius: 7px;
+  background-color: #8b5cf6;
+  height: 40px;
+  width: 50px;
+}
+hr {
+  height: 1px;
+  color: #9796f0;
+}
+
